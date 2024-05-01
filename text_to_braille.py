@@ -43,6 +43,7 @@ def map_a_to_j(letter, add = []):
 
 
 
+
 matrix = [[" "] * 2 for _ in range(3)]
 
 
