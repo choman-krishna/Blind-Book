@@ -43,13 +43,14 @@ def map_a_to_j(letter, add = []):
 
 
 
-matrix = [[False] * 2 for _ in range(3)]
+matrix = [[" "] * 2 for _ in range(3)]
 
 
-
-lst = map_a_to_j('v')
+lst = map_a_to_j('o')
 for n in lst:
-    matrix[n[0]][n[1]] = True
+    matrix[n[0]][n[1]] = "*"
 
 for row in matrix:
-    print(row)
+    for col in row:
+        print(col, end=' ')
+    print()
