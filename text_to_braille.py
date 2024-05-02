@@ -1,25 +1,41 @@
 from gpiozero import LED
 import time
 
-Led1 = LED(14) 
-Led2 = LED(15) 
-Led3 = LED(18) 
+# Cell 1
+Led_a1 = LED(14) 
+Led_a2 = LED(15) 
+Led_a3 = LED(18)
+Led_a4 = LED(23) 
+Led_a5 = LED(24) 
+Led_a6 = LED(25) 
 
-Led4 = LED(23) 
-Led5 = LED(24) 
-Led6 = LED(25) 
+# Cell 2 
+Led_b1 = LED(8) 
+Led_b2 = LED(7) 
+Led_b3 = LED(1)
+Led_b4 = LED(16) 
+Led_b5 = LED(20) 
+Led_b6 = LED(21) 
 
-def map_a_to_j(letter, add = []):
+#  Dict of Cells
+cells = {
+    1 : [Led_a1, Led_a2, Led_a3, Led_a4, Led_a5, Led_a6],
+    2 : [Led_b1, Led_b2, Led_b3, Led_b4, Led_b5, Led_b6]
+}
+
+# Text to Braille
+def map_to_braille(letter, cell_no, add = []):
 
     dist = {
-        1 : Led1,
-        2 : Led2,
-        3 : Led3,
-        4 : Led4,
-        5 : Led5,
-        6 : Led6
+        1 : cells[cell_no][0],
+        2 : cells[cell_no][1],
+        3 : cells[cell_no][2],
+        4 : cells[cell_no][3],
+        5 : cells[cell_no][4],
+        6 : cells[cell_no][5]
     }
 
+    # a - j
     if 'a' <= letter <= 'j':
         map_letters = {
             'a': [1],
@@ -43,23 +59,31 @@ def map_a_to_j(letter, add = []):
                 lst.append(dist[n])
 
         return lst
-    elif 'j' <= letter <= 't':
-        return map_a_to_j(chr(ord(letter) - 10), [3])
+    # k - t
+    elif 'k' <= letter <= 't':
+        return map_to_braille(chr(ord(letter) - 10), cell_no, [3])
+    # u - z
     else:
-        return map_a_to_j(chr(ord(letter) - 20), [3, 6])
+        return map_to_braille(chr(ord(letter) - 20), cell_no, [3, 6])
+
+# Function to ON LED
+def on_led(lst):
+    # Infinite Loop to keep the LED ON
+    while True:
+        for cell in lst:
+            for led in cell:
+                led.on()
 
 
-
-    
-
-
+cell_no = 1
+lst = []
 
 
+for c in "hi":
+    lst.append(map_to_braille(c, cell_no))
+    cell_no += 1
 
+on_led(lst)
 
-lst = map_a_to_j('q')
-while True:
-    for n in lst:
-        n.on()
 
 
