@@ -1,12 +1,23 @@
+from gpiozero import LED
+import time
+
+Led1 = LED(14) 
+Led2 = LED(15) 
+Led3 = LED(18) 
+
+Led4 = LED(23) 
+Led5 = LED(24) 
+Led6 = LED(25) 
+
 def map_a_to_j(letter, add = []):
 
     dist = {
-        1 : (0,0),
-        2 : (1,0),
-        3 : (2,0),
-        4 : (0,1),
-        5 : (1,1),
-        6 : (2,1)
+        1 : Led1,
+        2 : Led2,
+        3 : Led3,
+        4 : Led4,
+        5 : Led5,
+        6 : Led6
     }
 
     if 'a' <= letter <= 'j':
@@ -44,14 +55,11 @@ def map_a_to_j(letter, add = []):
 
 
 
-matrix = [[" "] * 2 for _ in range(3)]
 
 
-lst = map_a_to_j('o')
-for n in lst:
-    matrix[n[0]][n[1]] = "*"
+lst = map_a_to_j('q')
+while True:
+    for n in lst:
+        n.on()
 
-for row in matrix:
-    for col in row:
-        print(col, end=' ')
-    print()
+
